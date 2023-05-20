@@ -111,7 +111,7 @@ with tf.Graph().as_default():
 
         # Summaries for loss and accuracy
         loss_summary = tf.summary.scalar("loss", cnn.loss)
-        acc_summary = tf.summary.scalar("accuracy", cnn.accuracy)
+        # acc_summary = tf.summary.scalar("accuracy", cnn.accuracy)
 
         # Train Summaries
         train_summary_op = tf.summary.merge([loss_summary, acc_summary, grad_summaries_merged])
@@ -149,11 +149,11 @@ with tf.Graph().as_default():
               cnn.input_y: y_batch,
               cnn.dropout_keep_prob: FLAGS.dropout_keep_prob
             }
-            _, step, summaries, loss, accuracy = sess.run(
-                [train_op, global_step, train_summary_op, cnn.loss, cnn.accuracy],
+            _, step, summaries, loss = sess.run(
+                [train_op, global_step, train_summary_op, cnn.loss],
                 feed_dict)
             time_str = datetime.datetime.now().isoformat()
-            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss))
             train_summary_writer.add_summary(summaries, step)
 
         def dev_step(x_batch, y_batch, writer=None):
@@ -191,7 +191,7 @@ with tf.Graph().as_default():
                 for eval_batch in eval_batches:
                     num_batches += 1
                     x_dev_batch, y_dev_batch = zip(*eval_batch)
-                    sum_acc += dev_step(x_dev_batch, y_dev_batch, writer=dev_summary_writer)
+                    # sum_acc += dev_step(x_dev_batch, y_dev_batch, writer=dev_summary_writer)
                 print("Validation acc {:g}".format(sum_acc/num_batches))
                 print("")
             if current_step % FLAGS.checkpoint_every == 0:
