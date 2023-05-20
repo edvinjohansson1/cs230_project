@@ -36,25 +36,9 @@ def load_json_raw_data(chunk_path, num_limit):
             line_jsonify = json.loads(lines)  # build a dictionary
 
             helpful_list = line_jsonify['helpful']
-	
-            # if helpful_list[1] == 0 or helpful_list[0] == helpful_list[1] / 2:
-            if helpful_list[0] == helpful_list[1] / 2:
-                helpful_score = [0, 1, 0]  # Neutral
-                count[1] += 1
-                if count[1]>num_limit:
-                    continue
-            elif helpful_list[0] > helpful_list[1] / 2:
-                helpful_score = [0, 0, 1]  # helpful
-                count[2] += 1
-                if count[2]>num_limit:
-                    continue
-            elif helpful_list[0] < helpful_list[1] / 2:
-                helpful_score = [1, 0, 0]  # not helpful
-                count[0] += 1
-                if count[0]>num_limit:
-                    continue
+            score = helpful_list[0] / helpful_list[1]
             x_text.append(str(line_jsonify['reviewText']))
-            y.append(helpful_score)
+            y.append(score)
 
         json_chunk_file.close()
     # print(self.review_text_list[6])
