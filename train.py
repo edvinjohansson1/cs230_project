@@ -156,24 +156,24 @@ with tf.Graph().as_default():
             print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss))
             train_summary_writer.add_summary(summaries, step)
 
-        def dev_step(x_batch, y_batch, writer=None):
-            """
-            Evaluates model on a dev set
-            """
-            feed_dict = {
-              cnn.input_x: x_batch,
-              cnn.input_y: y_batch,
-              cnn.dropout_keep_prob: 1.0
-            }
-            step, summaries, loss, accuracy = sess.run(
-                [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
-                feed_dict)
-            time_str = datetime.datetime.now().isoformat()
-            print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
-            if writer:
-                writer.add_summary(summaries, step)
+#         def dev_step(x_batch, y_batch, writer=None):
+#             """
+#             Evaluates model on a dev set
+#             """
+#             feed_dict = {
+#               cnn.input_x: x_batch,
+#               cnn.input_y: y_batch,
+#               cnn.dropout_keep_prob: 1.0
+#             }
+#             step, summaries, loss, accuracy = sess.run(
+#                 [global_step, dev_summary_op, cnn.loss, cnn.accuracy],
+#                 feed_dict)
+#             time_str = datetime.datetime.now().isoformat()
+#             print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+#             if writer:
+#                 writer.add_summary(summaries, step)
                 
-            return accuracy
+#             return accuracy
 
         # Generate batches
         batches = batch_iter(
