@@ -1,4 +1,5 @@
-# cs230_project
+# Predicting Informativeness of Product Reviews: A Deep Learning Approach
+### Stanford University - CS230
 
 This repository started out as a clone of the https://github.com/LanternD/cse842-amazon-review-helpfulness-prediction repository, and has now been modified to fit our problem formulation of predicting helpfulness of Amazon reviews using a CNN. 
 
