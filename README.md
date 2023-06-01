@@ -1,8 +1,6 @@
 # Predicting Informativeness of Product Reviews: A Deep Learning Approach
 ### Stanford University - CS230
 
-This repository started out as a clone of the https://github.com/LanternD/cse842-amazon-review-helpfulness-prediction repository, and has now been modified to fit our problem formulation of predicting helpfulness of Amazon reviews using a CNN. 
+This repository contains codes of several neural network models run on amazon review dataset to predict helpfulness of each review. 
+We compare methods including CNN, RCNN, SLTM and compare the results of these various learning methods on sequence of text data in prediction of review helpfulness
 
-The original repository was built on Tensorflow 1, and we are now in the process of migrating it to Tensorflow 2. 
-
-Expect to soon also find an implementation of an unsupervised learning solution to the problem, which will hopefully achieve comparable- or better results than the supervised one above. 
