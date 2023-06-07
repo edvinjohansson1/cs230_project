@@ -1,5 +1,5 @@
 import numpy as np
-from keras.layers.embeddings import Embedding
+from keras.layers import Embedding
 
 def review_to_indices(X, word_to_index, max_review_word_count):
     """ Converts an array of reviews (each as one string) into an array of
@@ -33,7 +33,12 @@ def embedding_layer_glove(word_to_vec_map, word_to_index):
         pre-trained GloVe 100-dimensional vectors. 
         
         Inputs:
-            
+            word_to_vec_map: dictionary that maps from words to embeddings
+            words_to_index:  dictionary that maps from words to indices
+        
+        Outputs:
+            embedding_layer: A tf.keras.layers.Embedding object which embedds (indices of)
+                             words into pre-trained GloVe 100-dim vectors
     """
     input_dim  = len(word_to_index) + 1
     output_dim = word_to_vec_map['a'].shape[0]

@@ -29,7 +29,7 @@ def read_glove_vecs(glove_file):
             index_to_words:  dictionary that maps from indices to words
             word_to_vec_map: dictionary that maps from words to embeddings
     """
-    print('\nCreating word embeddings matrix ...')
+    print('Creating word embeddings matrix ...')
     with open(glove_file, 'r') as f:
         words = set()
         word_to_vec_map = {}
@@ -55,9 +55,10 @@ def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_
     x_text = []
     y = []
     count = 0 # only used for printing purposes at the end
+    discard_count = 0  # only used for printing purposes at the end
     
     with open(chunk_path, 'r') as tsv_chunk_file:
-        print("\nLoading data ...")
+        print("Loading data ...")
         reader = csv.reader(tsv_chunk_file, delimiter='\t')
         header = next(reader)
         
@@ -72,12 +73,14 @@ def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_
             
             # Only include reviews with enough votes
             if total_votes < min_total_votes:
+                discard_count += 1
                 continue
             
             # check if length is short enough
             review_body_split = review_body.split(" ")
             if len(review_body_split) > max_review_word_count:
                 if not keep_start_of_longer_reviews:
+                    discard_count += 1
                     continue
             
             review_body = ' '.join(review_body_split[:max_review_word_count])
@@ -86,6 +89,7 @@ def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_
             count += 1
             
         print(f'Chunk loaded. Found {count} data points with >= {min_total_votes} total votes.')
+        print(f'Discarded {discard_count} data points.')
         
         X = np.asarray(x_text)
         Y = np.asarray(y)

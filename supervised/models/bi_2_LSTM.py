@@ -4,7 +4,7 @@ from keras.layers import Input, Dense, Dropout, LSTM, Activation, Bidirectional
 from preprocessing import embedding_layer_glove
 
 
-def Bi_2_LSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[128, 128], dropout_rates=[0.5, 0.5]):
+def Bi_2_LSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[32, 64], dropout_rates=[0.5, 0.5]):
     """
     Implements a two-layer bi-directional LSTM with dropout after each
     LSTM layer as a Keras model object.
@@ -26,19 +26,19 @@ def Bi_2_LSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[128, 128]
     embeddings = embedding_layer_glove(word_to_vec_map, word_to_index)(word_indices)
     
     # First LSTM layer and dropout
-    X = Bidirectional(LSTM(units=lstm_units[0], return_sequences=True))(embeddings)
+    X = Bidirectional(LSTM(units=lstm_units[0], return_sequences=True, recurrent_regularizer='l2'))(embeddings)
     X = Dropout(rate=dropout_rates[0])(X)
     
     # Second LSTM layer
 #     X = Bidirectional(LSTM(units=lstm_units[1], return_sequences=True))(X)
-    X = Bidirectional(LSTM(units=lstm_units[1]))(X)
+    X = Bidirectional(LSTM(units=lstm_units[1], recurrent_regularizer='l2'))(X)
     X = Dropout(rate=dropout_rates[1])(X)
     
     # Intermediate dense layers followed by
     # dense layer with one output unit for prediction
 #     X = Dense(units=64, activation='relu')(X)
 #     X = Dense(units=16, activation='relu')(X)
-    X = Dense(units=1, activation='sigmoid')(X)
+    X = Dense(units=1, activation='sigmoid', kernel_regularizer='l2')(X)
     
     
     # Finally, create the model object
