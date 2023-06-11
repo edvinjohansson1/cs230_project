@@ -1,6 +1,7 @@
 # Predicting Informativeness of Product Reviews: A Deep Learning Approach
 ### Stanford University - CS230
 
-This repository contains codes of several neural network models run on amazon review dataset to predict helpfulness of each review. 
-We compare methods including CNN, RCNN, uni-dorectional and bi-directional LSTM and compare the results of these various learning methods on sequence of text data in prediction of review helpfulness
+This repository contains code for several neural network models to be run on Amazon review data to predict the helpfulness of each review.
+We compare three supervised methods: a CNN-based, an LSTM-based, and a transformer-based method; as well as an unsupervised learning method focused on keyword extraction and matching.
 
+To run these models yourself, you need to download a dataset from [Amazon customer review dataset](https://s3.amazonaws.com/amazon-reviews-pds/readme.html). You also need to download [Stanford's GloVe 100d word embeddings](https://www.kaggle.com/datasets/danielwillgeorge/glove6b100dtxt). Store these somewhere and update the respective paths in supervised/parameters.py.
