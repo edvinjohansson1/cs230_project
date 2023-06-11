@@ -4,7 +4,7 @@ from keras.layers import Input, Dense, Dropout, Activation, Conv2D, ReLU, MaxPoo
 from preprocessing import embedding_layer_glove
 
 
-def CNN1(input_shape, word_to_vec_map, word_to_index, FLAGS):
+def CNN(input_shape, word_to_vec_map, word_to_index, FLAGS):
     """
     Implements a two-layer unidirectional LSTM with dropout after each
     LSTM layer as a Keras model object.
@@ -45,10 +45,10 @@ def CNN1(input_shape, word_to_vec_map, word_to_index, FLAGS):
     ########### CNN part (end) #########################
     
     F = Flatten()(P3)                                                                             # (b, 2208)
-    out = Dense(units=1)(F)                                                                       # (b, 1)
+    out = Dense(units=1, activation='sigmoid')(F)                                                 # (b, 1)
     
     
     # Finally, create the model object
-    model = Model(inputs=word_indices, outputs=out, name='CNN1')
+    model = Model(inputs=word_indices, outputs=out, name='CNN')
     
     return model

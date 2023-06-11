@@ -4,7 +4,7 @@ from keras.layers import Input, Dense, Dropout, LSTM, Activation, Bidirectional
 from preprocessing import embedding_layer_glove
 
 
-def Bi_2_LSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[32, 64], dropout_rates=[0.5, 0.5]):
+def BiLSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[64, 32], dropout_rates=[0.5, 0.5]):
     """
     Implements a two-layer bi-directional LSTM with dropout after each
     LSTM layer as a Keras model object.
@@ -42,6 +42,6 @@ def Bi_2_LSTM(input_shape, word_to_vec_map, word_to_index, lstm_units=[32, 64], 
     
     
     # Finally, create the model object
-    model = Model(inputs=word_indices, outputs=X, name='bi_2_LSTM')
+    model = Model(inputs=word_indices, outputs=X, name='biLSTM')
     
     return model 

@@ -1,5 +1,6 @@
 import numpy as np
 import csv
+import re
 
 def clean_str(string):
     """
@@ -51,13 +52,13 @@ def read_glove_vecs(glove_file):
     
     return words_to_index, index_to_words, word_to_vec_map
 
-def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_longer_reviews):
+def load_data(file_path, min_total_votes, max_review_word_count, keep_start_of_longer_reviews):
     x_text = []
     y = []
     count = 0 # only used for printing purposes at the end
     discard_count = 0  # only used for printing purposes at the end
     
-    with open(chunk_path, 'r') as tsv_chunk_file:
+    with open(file_path, 'r') as tsv_chunk_file:
         print("Loading data ...")
         reader = csv.reader(tsv_chunk_file, delimiter='\t')
         header = next(reader)
@@ -66,7 +67,7 @@ def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_
         header_dict = {column: index for index, column in enumerate(header)}
 
         for row in reader:
-            review_body   = row[header_dict['review_body']]
+            review_body   = clean_str(row[header_dict['review_body']])
             # star_rating   = row[header_dict['star_rating']]
             helpful_votes = int(row[header_dict['helpful_votes']])
             total_votes   = int(row[header_dict['total_votes']])
@@ -88,8 +89,8 @@ def load_data(chunk_path, min_total_votes, max_review_word_count, keep_start_of_
             y.append(helpful_votes/total_votes)
             count += 1
             
-        print(f'Chunk loaded. Found {count} data points with >= {min_total_votes} total votes.')
-        print(f'Discarded {discard_count} data points.')
+        print(f'Data loaded. Found {count} data points with >= {min_total_votes} total votes.')
+        # print(f'Discarded {discard_count} data points.')
         
         X = np.asarray(x_text)
         Y = np.asarray(y)
